@@ -4,29 +4,28 @@
 #include "..\Header\Light.h"
 
 Light over_light;
+Player over_player;
 
 void SceneOver::init()
 {
 	over.Initialize();
 	over.Load("Sa_fbx/gameover.fbx");
-	over.pos = { -35.0f,0.0f,0.0f };
-	over.angle = { 0.0f,-10.0f*TO_RADIAN,0.0f };
+	over.pos = { -30.0f,-15.0f,60.0f };
+	over.color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
+	over.scale = DirectX::XMFLOAT3(0.8f, 0.8f,0.8f);
+
+	over_player.Initialize("Sa_fbx/body.fbx");
+	over_player.obj.color = DirectX::XMFLOAT4(1.0f, .0f, .0f, 1.0f);
+	over_player.tail.color= DirectX::XMFLOAT4(1.0f, .0f, .0f, 1.0f);
+	over_player.head.color = DirectX::XMFLOAT4(1.0f, .0f, .0f, 1.0f);
+	over_player.pos = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 
 	cameraInit(DirectX::XMFLOAT4(0, -1, 1, 0));
 
-	push.Initialize();
-	push.Load("Sa_fbx/push_enter.fbx");
-	push.angle = { 0.0f,0.0f*TO_RADIAN,0.0f };
-	push.scale = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
-	push.pos.x = 0.0f;
-	push.pos.y = -15.0f;
-	push.pos.z = -5.0f;
-
-	over_light.pos = DirectX::XMFLOAT3(0.0f, 3.0f, -10.0f);
-	over_light.attenution = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-	over_light.color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-
+	camera.position.x = 0.0f;
+	camera.position.y = 0.0f;
 	camera.position.z = -20.0f;
+	camera.point_view = over_player.pos;
 }
 
 void SceneOver::update()
@@ -47,7 +46,8 @@ void SceneOver::render()
 
 	blender::Set(blender::NONE, FRAMEWORK.getContext());
 
-	//over.Render(view, projection, light_direction,0, over_light.pos, 1, over_light);
+	over.Render(view, projection, light_direction,2, over_light.pos, 1, over_light);
+	over_player.Render(view, projection, DirectX::XMFLOAT4(0.0f,0.8f,0.2f, 0.0f));
 
 	//push.Render(view, projection, light_direction,0, over_light.pos, 1, over_light);
 }
