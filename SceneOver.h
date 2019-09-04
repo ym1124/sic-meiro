@@ -15,5 +15,7 @@ public:
 	void render();
 	void release();
 
+	int over_bgm;
+
 	~SceneOver() { release(); }
 };
