@@ -56,4 +56,5 @@ void SceneOver::release()
 {
 	over.Release();
 	push.Release();
+	over_player.Release();
 }
